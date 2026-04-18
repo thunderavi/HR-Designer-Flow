@@ -42,13 +42,9 @@
 
 .custom-node:has(.badge-start) { border-left-color: #10b981; }
 .custom-node:has(.badge-task) { border-left-color: #38bdf8; }
-.custom-node:has(.badge-approval) { border-left-color: #f59e0b; }
-.custom-node:has(.badge-automated) { border-left-color: #818cf8; }
-.custom-node:has(.badge-end) { border-left-color: #ef4444; }
-.custom-node[style*="--node-color"] { border-left-color: var(--node-color); }
-
 .executing-highlight {
-  border-color: var(--accent-primary) !important;
-  box-shadow: 0 0 15px var(--accent-primary) !important;
-  transform: scale(1.05);
+  border-width: 2px !important;
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 20px #38bdf8, inset 0 0 10px rgba(56, 189, 248, 0.2) !important;
+  z-index: 9999 !important;
 }

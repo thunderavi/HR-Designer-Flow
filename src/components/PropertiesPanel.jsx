@@ -44,6 +44,12 @@ const PropertiesPanel = ({ selectedNode, onUpdate, onClose }) => {
     mockApi.getAutomations().then(setAutomations);
   }, []);
 
+  const [isSaved, setIsSaved] = useState(false);
+  const handleApply = () => {
+    setIsSaved(true);
+    setTimeout(() => setIsSaved(false), 1500);
+  };
+
   if (!selectedNode) return null;
 
   const handleChange = (field, value) => {
@@ -196,9 +202,12 @@ const PropertiesPanel = ({ selectedNode, onUpdate, onClose }) => {
       <div className="panel-content">
         {renderForm()}
       </div>
-      <div className="panel-footer">
-        <button className="btn-delete" onClick={() => onUpdate(selectedNode.id, null, true)}>
-          <Trash2 size={16} /> Delete Node
+      <div className="panel-footer" style={{ display: 'flex', gap: '8px' }}>
+        <button className="btn-save" onClick={handleApply} style={{ flex: 1, background: isSaved ? 'var(--success)' : 'var(--accent-primary)', color: 'white', border: 'none', padding: '8px', borderRadius: '6px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontWeight: 600, transition: 'background 0.2s' }}>
+          <Save size={16} /> {isSaved ? "Saved!" : "Apply Changes"}
+        </button>
+        <button className="btn-delete" onClick={() => onUpdate(selectedNode.id, null, true)} style={{ flex: 1, padding: '8px', borderRadius: '6px' }}>
+          <Trash2 size={16} /> Delete
         </button>
       </div>
     </div>
