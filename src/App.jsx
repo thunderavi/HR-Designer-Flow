@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar';
 import WorkflowCanvas from './components/WorkflowCanvas';
 import PropertiesPanel from './components/PropertiesPanel';
 import SandboxPanel from './components/SandboxPanel';
+import OnboardingModal from './components/OnboardingModal';
 import { useWorkflow } from './hooks/useWorkflow';
 import { exportCanvasToPDF } from './utils/exportPdf';
 import { Download, Plus, Moon, Sun } from 'lucide-react';
@@ -43,7 +44,7 @@ const Resizer = ({ onDrag, direction = 'horizontal' }) => {
 };
 
 function App() {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('dark');
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -81,8 +82,9 @@ function App() {
   }, []);
 
   return (
-    <div className="app-container" style={{ display: 'flex', width: '100%', height: '100%' }}>
-      <ReactFlowProvider>
+    <ReactFlowProvider>
+      <OnboardingModal />
+      <div className="app-container" style={{ display: 'flex', width: '100%', height: '100%' }}>
         
         {/* Left Panel */}
         <div style={{ width: sidebarWidth, flexShrink: 0, height: '100%' }}>
@@ -165,8 +167,8 @@ function App() {
           </div>
         </section>
 
-      </ReactFlowProvider>
-    </div>
+      </div>
+    </ReactFlowProvider>
   );
 }
 

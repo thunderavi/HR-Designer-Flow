@@ -91,7 +91,13 @@ export const mockApi = {
 
     // 3. Check for orphans
     if (visited.size < nodes.length) {
-      errors.push('Disconnected Nodes: There are orphan nodes that cannot be reached from the Start Node.');
+      const orphans = nodes.filter(n => !visited.has(n.id));
+      logs.push({
+        nodeId: 'system',
+        nodeLabel: 'System Note',
+        timestamp: new Date().toISOString(),
+        status: `WARNING: ${orphans.length} node(s) were ignored because they weren't connected to the Start path.`
+      });
     }
 
     return {

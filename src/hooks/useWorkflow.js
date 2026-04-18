@@ -137,6 +137,16 @@ export const useWorkflow = () => {
         className: node.id === highlightedNodeId ? 'executing-highlight' : '',
       }))
     );
+    
+    setEdges((eds) => 
+      eds.map((edge) => ({
+        ...edge,
+        animated: edge.source === highlightedNodeId || edge.animated, 
+        style: edge.source === highlightedNodeId 
+          ? { stroke: '#38bdf8', strokeWidth: 4, filter: 'drop-shadow(0 0 6px #38bdf8)' } 
+          : { stroke: '#818cf8', strokeWidth: 2 }
+      }))
+    );
   }, [highlightedNodeId, isLoaded]);
 
   return {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, UserCheck, ShieldCheck, Zap, Square, LayoutTemplate } from 'lucide-react';
+import { Play, UserCheck, ShieldCheck, Zap, Square, LayoutTemplate, Network, Box } from 'lucide-react';
 import { NODE_TYPES } from '../constants/workflow';
 import '../styles/sidebar.css';
 
@@ -20,8 +20,19 @@ const Sidebar = () => {
 
   return (
     <aside className="sidebar">
+      {/* Brand Logo Area */}
+      <div className="brand-logo" style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px', paddingBottom: '24px', borderBottom: '1px dashed var(--border-color)' }}>
+        <div style={{ background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))', color: '#fff', padding: '10px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyItems: 'center', boxShadow: 'var(--shadow-md)' }}>
+          <Network size={22} strokeWidth={2.5} />
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <h2 style={{ fontSize: '1.2rem', margin: 0, fontWeight: 800, letterSpacing: '-0.5px' }}>HR Component</h2>
+          <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 700, letterSpacing: '1px' }}>Workflow Designer</span>
+        </div>
+      </div>
+
       <div className="sidebar-header">
-        <h3>Components</h3>
+        <h3 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Box size={16} /> Elements</h3>
         <p>Drag nodes to canvas</p>
       </div>
       <div className="node-list">

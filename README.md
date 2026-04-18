@@ -1,46 +1,113 @@
-# HR Workflow Designer Prototype
+<div align="center">
+  <img src="https://img.icons8.com/fluency/96/000000/flow-chart.png" alt="Workflow Logo" />
+  <h1>HR Workflow Designer</h1>
+  <p><em>A visual, node-based prototype designed for simulating and configuring HR workflow architectures.</em></p>
+  
+  <p>
+    <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+    <img src="https://img.shields.io/badge/React_Flow-FF0072?style=for-the-badge&logo=react&logoColor=white" />
+    <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" />
+  </p>
+</div>
 
-This repository contains the functional prototype for the HR Workflow Designer module, built as part of the Full Stack Engineering assessment for Tredence Analytics. The application provides an intuitive visual editor that allows HR admins to safely build, configure, and simulate complex workflows.
+<br />
 
-## How to Run
+## 🚀 Quick Start
 
-1. Clone or extract the repository folder.
-2. Install the necessary dependencies (assumes Node.js is installed locally):
+1. **Clone** or extract the repository folder locally.
+2. **Install** the engine dependencies:
    ```bash
    npm install
    ```
-3. Boot the local Vite development server:
+3. **Boot** the local Vite development server:
    ```bash
    npm run dev
    ```
-4. Open the displayed URL (usually `http://localhost:5173`) in your browser to begin creating workflows.
+4. **Open** `http://localhost:5173` to jump directly into the workspace!
 
-## Architecture
+---
 
-The application is structured into discrete, highly-modular layers that strictly separate visual presentation, internal component states, and mock external API dependencies.
+## 🧩 Architectural Cards
 
-- **`src/components/`**: Reusable structural interface panels. `WorkflowCanvas.jsx` manages the core React Flow instantiation mapping, while `PropertiesPanel.jsx` and `SandboxPanel.jsx` handle node-specific context mutation and sandbox log streams smoothly.
-- **`src/nodes/`**: Encapsulates the explicit visual presentation and layout schemas for defined specific UI node objects (e.g., Task, Approval, Automated). Handle connection schemas are abstracted carefully.
-- **`src/hooks/useWorkflow.js`**: A centralized custom state management hook. Hoisting the nodes and edge lifecycle events dynamically to `App.jsx` allows for safe serialization of the system state (for Local Storage persistence and project switching mechanisms) without coupling UI representation layers into heavy generic state components.
-- **`src/api/mockApi.js`**: Directly simulates asynchronous external backend communication parameters. It models standardized network processing delays alongside handling complete data integrity validations off thread (DFS cycle processing, BFS pathway simulations).
+<table>
+  <tr>
+    <td align="center" width="20%">
+      <img src="https://img.icons8.com/fluency/48/000000/play.png" /><br/>
+      <b>Start / End</b>
+    </td>
+    <td>Anchor elements defining the absolute structural boundries and initial metadata of your logic.</td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.icons8.com/fluency/48/000000/task.png" /><br/>
+      <b>Manual Task</b>
+    </td>
+    <td>A defined human-in-the-loop requirement (e.g., "Review Candidate Resume") containing flexible assignee tracking.</td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.icons8.com/fluency/48/000000/approval.png" /><br/>
+      <b>Approval Node</b>
+    </td>
+    <td>An organizational gateway requiring explicit managerial or directory-level security sign-offs.</td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.icons8.com/fluency/48/000000/api.png" /><br/>
+      <b>System Action</b>
+    </td>
+    <td>An algorithmic logic brick triggering backend events (e.g., Sending Emails or updating the HRIS server).</td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.icons8.com/nolan/48/puzzle.png" /><br/>
+      <b>Custom Card</b>
+    </td>
+    <td>A highly flexible bespoke component leveraging native dynamic properties to scale unique business rules.</td>
+  </tr>
+</table>
 
-## Design Decisions
+---
 
-- **Unified Custom Hook over Global Providers:** I decided to maintain the node registry strictly inside a single `useWorkflow` custom hook instead of bloating the ecosystem with Redux. This enforces a 100% reliable single-source-of-truth accessible from any separated UI component safely, directly mapping to standard React lifecycle parameters.
-- **Omni-Directional Edge Routing:** To prevent inadvertently building a locked, rigid left-to-right visual pipeline, every Node Component type actively registers four explicit Source and Target connection endpoints. This mechanically enables fluid node branching matching native whiteboard logic without collision mapping issues.
-- **Native Dynamic Workspace Resizing:** Instead of importing heavyweight grid-system library dependencies for the app layout structure, the main application panels rely on a completely custom, hyper-optimized React `Resizer` Hook built exclusively tracking raw viewport coordinate deltas for buttery-smooth unconstrained flex adjustments without component lag.
-- **Structural API Simulation Constraints:** The mock algorithm does not pretend execution; it structurally evaluates the React Flow nodes logic directly. Utilizing basic algorithmic principles (Depth-First Search DFS), it strictly evaluates and protects the integrity of the Directed Acyclic Graph (DAG) state, gracefully halting when dangerous structural Circular Execution logic (Cycles) or missing path orphans are detected.
+## ✨ Core Mechanics & Implementations
 
-## What I Completed vs. What I Would Add with More Time
+<details open>
+<summary><b>▶️ Animated View & Sandbox Tracing</b></summary>
+<br/>
+The embedded Sandbox Sandbox execution engine evaluates your structural nodes logically via a custom Depth-First Search algorithm. It features a stunning <b>animated view</b> where each active processing <b>box</b> solidly lights up in cyan neon alongside its connected line to seamlessly trace the topological workflow path!
+</details>
 
-### What I Completed
-- Architected the complete foundational React Flow Canvas, inclusive of specific Node validations, dynamic configurable attribute tracking, and seamless layout transitions.
-- Integrated a comprehensive `PropertiesPanel` utilizing polymorphic generic property mapping responding identically dynamically based upon API data responses (the Automations schema generator).
-- Delivered a step-by-step visual Sandbox execution engine accurately flagging data structures and emitting runtime logs accurately.
-- Additionally enhanced application fidelity by delivering Local Storage Workspace persistency scaling arrays out dynamically for multiple workflows simultaneously alongside a highly integrated zero-dependency DOM-to-PDF export utility context snap capture package structure.
+<details open>
+<summary><b>🎨 Responsive Theming & Workspace Engine</b></summary>
+<br/>
+Bypassed heavy CSS libraries to implement a purely native Dark/Light mode toggle directly at the root <code>DOM</code> level. The drag-and-drop workspace scaling relies on a completely custom Mathematical <code>Resizer</code> hook for fluid, hardware-accelerated boundary shifting.
+</details>
 
-### What I Would Add with More Time
-- **Schema Import/Export Utility**: Adding explicit `JSON` parsing modules natively hooking to the local storage interface to allow human users to directly download, pass offline, and directly upload raw `.json` configurations between localized environments easily.
-- **Spatial Auto-Layout Optimization**: Implementing directed graph positioning libraries (like `dagre`) mapping to a "Beautify Flow" function to intelligently untangle heavily nested or overly complex structural graph connections programmatically into aligned visual trees.
-- **Interconnected Data Contexts**: Defining a secondary schema dictionary bridging early workflow steps deeper into the downstream nodes natively. For instance, parsing raw interpolation strings inside Automated Step Node `To:` emails (e.g. mapping `{employee_email}` generated inside Node 1 dynamically directly resolving cleanly upon node execution sequence later).
-- **Undo / Redo Safety Buffers**: Appending a stack buffer mapping into `useWorkflow.js` capable of listening internally and rolling back exact component mutations across arbitrary state jumps safely.
+<details>
+<summary><b>⌨️ Workstation Keyboard Binding</b></summary>
+<br/>
+Designed around professional UI expectations, integrating <code>Ctrl+C</code> for array cloning, <code>Ctrl+V</code> for spatially intelligent pasting, and native <code>Backspace/Delete</code> targeting bypassing input interferences.
+</details>
+
+<details>
+<summary><b>💾 Local Memory & User Onboarding</b></summary>
+<br/>
+Workflows and projects are strictly auto-saved into the host's browser <code>localStorage</code> database enabling scalable, zero-dependency persistence. New users are seamlessly walked through core mechanics via an integrated Modal Tutorial Engine tied explicitly to cache. 
+</details>
+
+<details>
+<summary><b>📷 Zero-Dependency PDF Engine</b></summary>
+<br/>
+Integrated localized package snap-caching to easily rip the exact configured DOM workspace grid and compile it cleanly into presentation-ready PDF arrays based upon the active file context.
+</details>
+
+---
+
+## 🔮 Future Architecture Roadmap
+
+If granted additional scale timing, the codebase would implement:
+
+- 📥 **JSON Serialization Pipelines**: Hooking explicit file-parsing protocols into the local storage mechanism for downloading or injecting raw `.json` arrays between disconnected offline environments.
+- 📐 **Spatial Auto-Layout Optimization**: Implementing directed graph positioning libraries (e.g., `dagre`) to map a single "Beautify Layout" click that auto-untangles heavy visual flow networks programmatically.
+- 🔗 **Interconnected Param Definitions**: Linking raw interpolation strings inside down-step nodes (e.g., parsing `{employee_email}` from an initial onboarding step directly into a Slack output message step dynamically).
+- 🔄 **Immutable Undo/Redo Stacks**: Writing history buffers dynamically logging each array structure delta to securely enable seamless `Ctrl+Z` logic regressions. 
