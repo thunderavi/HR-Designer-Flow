@@ -30,7 +30,7 @@ const nodeTypes = {
   [NODE_TYPES.CUSTOM]: CustomNode,
 };
 
-const WorkflowCanvas = ({ nodes, setNodes, edges, setEdges, onNodeClick, onNodeAdded }) => {
+const WorkflowCanvas = ({ theme, nodes, setNodes, edges, setEdges, onNodeClick, onNodeAdded }) => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
@@ -113,6 +113,7 @@ const WorkflowCanvas = ({ nodes, setNodes, edges, setEdges, onNodeClick, onNodeA
   return (
     <div className="canvas-wrapper" ref={reactFlowWrapper}>
       <ReactFlow
+        colorMode={theme}
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
@@ -146,8 +147,8 @@ const WorkflowCanvas = ({ nodes, setNodes, edges, setEdges, onNodeClick, onNodeA
             if (n.type === 'endNode') return 'rgba(239, 68, 68, 0.4)';
             return '#fff';
           }}
-          maskColor="rgba(248, 250, 252, 0.7)"
-          style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px' }}
+          maskColor={theme === 'dark' ? 'rgba(15, 23, 42, 0.7)' : 'rgba(248, 250, 252, 0.7)'}
+          style={{ backgroundColor: 'var(--panel-bg)', border: '1px solid var(--border-color)', borderRadius: '8px' }}
         />
       </ReactFlow>
     </div>
