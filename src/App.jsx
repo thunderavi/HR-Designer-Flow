@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { ReactFlowProvider } from '@xyflow/react';
 import Sidebar from './components/Sidebar';
 import WorkflowCanvas from './components/WorkflowCanvas';
@@ -6,7 +6,7 @@ import PropertiesPanel from './components/PropertiesPanel';
 import SandboxPanel from './components/SandboxPanel';
 import { useWorkflow } from './hooks/useWorkflow';
 import { exportCanvasToPDF } from './utils/exportPdf';
-import { Download, Plus } from 'lucide-react';
+import { Download, Plus, Moon, Sun } from 'lucide-react';
 import './App.css';
 
 const Resizer = ({ onDrag, direction = 'horizontal' }) => {
@@ -43,6 +43,16 @@ const Resizer = ({ onDrag, direction = 'horizontal' }) => {
 };
 
 function App() {
+  const [theme, setTheme] = useState('light');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
+
   const {
     nodes, setNodes,
     edges, setEdges,
@@ -108,6 +118,12 @@ function App() {
             <div className="header-actions">
               <span className="node-count" style={{ display: 'flex', alignItems: 'center' }}>{nodes.length} Nodes</span>
               <button 
+                onClick={toggleTheme}
+                style={{ background: 'var(--bg-canvas)', border: '1px solid var(--border-color)', padding: '4px 10px', borderRadius: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+              >
+                {theme === 'light' ? <Moon size={14} color="var(--text-primary)" /> : <Sun size={14} color="var(--text-primary)" />}
+              </button>
+              <button 
                 onClick={() => exportCanvasToPDF(projectName)}
                 style={{ background: 'var(--bg-canvas)', border: '1px solid var(--border-color)', padding: '4px 10px', borderRadius: '4px', color: 'var(--text-primary)', cursor: 'pointer', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px' }}
               >
@@ -118,6 +134,7 @@ function App() {
           
           <div style={{ flexGrow: 1 }}>
             <WorkflowCanvas 
+              theme={theme} 
               nodes={nodes} 
               setNodes={setNodes} 
               edges={edges} 
