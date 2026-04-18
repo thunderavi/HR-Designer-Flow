@@ -68,6 +68,8 @@
 </table>
 
 ---
+<img width="1848" height="936" alt="Screenshot from 2026-04-18 23-12-56" src="https://github.com/user-attachments/assets/4ff136dd-47ff-482c-bfdc-6fb1c964dc93" />
+
 
 ## ✨ Core Mechanics & Implementations
 
