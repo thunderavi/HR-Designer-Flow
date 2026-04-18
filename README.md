@@ -1,57 +1,46 @@
 # HR Workflow Designer Prototype
 
-This repository contains a fully functional, highly scalable front-end prototype for an HR Workflow Designer, designed using **React 19**, **Vite**, and **React Flow**.
+This repository contains the functional prototype for the HR Workflow Designer module, built as part of the Full Stack Engineering assessment for Tredence Analytics. The application provides an intuitive visual editor that allows HR admins to safely build, configure, and simulate complex workflows.
 
-This prototype exceeds the core requirements of designing a visual node-based editor by adding advanced state mechanics like local persistence, smooth dynamic resizers, comprehensive form evaluation interfaces, and cyclic graph testing.
+## How to Run
 
-## 🚀 How to Run
-
-1. Clone or download the repository.
-2. Install dependencies:
+1. Clone or extract the repository folder.
+2. Install the necessary dependencies (assumes Node.js is installed locally):
    ```bash
    npm install
    ```
-3. Boot the local development server:
+3. Boot the local Vite development server:
    ```bash
    npm run dev
    ```
-4. Open the displayed URL (usually `http://localhost:5173`) in your browser to begin routing nodes.
+4. Open the displayed URL (usually `http://localhost:5173`) in your browser to begin creating workflows.
 
-## 🏗️ Architecture & Component Design
+## Architecture
 
-The application is structured into discrete layers strictly separating visual representation, business logic, and API mock handling.
+The application is structured into discrete, highly-modular layers that strictly separate visual presentation, internal component states, and mock external API dependencies.
 
-- **`/components`**: Reusable infrastructure components. `WorkflowCanvas.jsx` handles strictly the React Flow instantiation, while `PropertiesPanel.jsx` and `SandboxPanel.jsx` act as distinct layout segments.
-- **`/nodes`**: Encapsulates the visual presentation and internal state registration for each specific node. Node connectivity is omni-directional, with overlapping Target/Source handles leveraging CSS trickery for absolute placement.
-- **`/hooks`**: Centralized custom `useWorkflow.js` state machine. Abstracting the nodes and edge lifecycle events allows us to effortlessly serialize the state representation for the Multi-Project engine or mock API simulation without triggering unnecessary full-app redraws.
-- **`/api`**: `mockApi.js` provides simulated ASYNC external communication. It models server responses with intentional networking latency (`500ms`-`1500ms` ping delays).
+- **`src/components/`**: Reusable structural interface panels. `WorkflowCanvas.jsx` manages the core React Flow instantiation mapping, while `PropertiesPanel.jsx` and `SandboxPanel.jsx` handle node-specific context mutation and sandbox log streams smoothly.
+- **`src/nodes/`**: Encapsulates the explicit visual presentation and layout schemas for defined specific UI node objects (e.g., Task, Approval, Automated). Handle connection schemas are abstracted carefully.
+- **`src/hooks/useWorkflow.js`**: A centralized custom state management hook. Hoisting the nodes and edge lifecycle events dynamically to `App.jsx` allows for safe serialization of the system state (for Local Storage persistence and project switching mechanisms) without coupling UI representation layers into heavy generic state components.
+- **`src/api/mockApi.js`**: Directly simulates asynchronous external backend communication parameters. It models standardized network processing delays alongside handling complete data integrity validations off thread (DFS cycle processing, BFS pathway simulations).
 
-## 🧠 Design Decisions & Assumptions
+## Design Decisions
 
-### 1. Unified State vs Local State
-Initially, `@xyflow/react` instances maintain tight internal graph coordination. However, building decoupled UI systems (like the external Property Panel forms or the PDF exporter) demanded that the node registry be hoisted upward into `App.jsx` context. We opted to handle this via the `useWorkflow` custom hook instead of a heavy Redux provider to minimize dependency weight while maintaining absolute single-source-of-truth reliability.
+- **Unified Custom Hook over Global Providers:** I decided to maintain the node registry strictly inside a single `useWorkflow` custom hook instead of bloating the ecosystem with Redux. This enforces a 100% reliable single-source-of-truth accessible from any separated UI component safely, directly mapping to standard React lifecycle parameters.
+- **Omni-Directional Edge Routing:** To prevent inadvertently building a locked, rigid left-to-right visual pipeline, every Node Component type actively registers four explicit Source and Target connection endpoints. This mechanically enables fluid node branching matching native whiteboard logic without collision mapping issues.
+- **Native Dynamic Workspace Resizing:** Instead of importing heavyweight grid-system library dependencies for the app layout structure, the main application panels rely on a completely custom, hyper-optimized React `Resizer` Hook built exclusively tracking raw viewport coordinate deltas for buttery-smooth unconstrained flex adjustments without component lag.
+- **Structural API Simulation Constraints:** The mock algorithm does not pretend execution; it structurally evaluates the React Flow nodes logic directly. Utilizing basic algorithmic principles (Depth-First Search DFS), it strictly evaluates and protects the integrity of the Directed Acyclic Graph (DAG) state, gracefully halting when dangerous structural Circular Execution logic (Cycles) or missing path orphans are detected.
 
-### 2. Omni-Directional Routing (The User Requirement)
-To prevent creating rigid left-to-right locked flows, every single Node Component type registers 4 distinct Handles (`target` and `source` explicitly overlapped mechanically on the Top, Bottom, Left, and Right). This allows the flowchart engine to mimic a freeform digital whiteboard, prioritizing HR Admin creative flexibility over rigid directional pipelines.
+## What I Completed vs. What I Would Add with More Time
 
-### 3. Native Dynamic Resizing
-Rather than importing massive generic grid-system libraries (`react-resizable-panels`), we built a hyper-optimized custom React Resizer hook (`Resizer` in App.jsx). Native DOM mapping bypasses virtual shadow-DOM lags and prevents Vite module collision caching.
+### What I Completed
+- Architected the complete foundational React Flow Canvas, inclusive of specific Node validations, dynamic configurable attribute tracking, and seamless layout transitions.
+- Integrated a comprehensive `PropertiesPanel` utilizing polymorphic generic property mapping responding identically dynamically based upon API data responses (the Automations schema generator).
+- Delivered a step-by-step visual Sandbox execution engine accurately flagging data structures and emitting runtime logs accurately.
+- Additionally enhanced application fidelity by delivering Local Storage Workspace persistency scaling arrays out dynamically for multiple workflows simultaneously alongside a highly integrated zero-dependency DOM-to-PDF export utility context snap capture package structure.
 
-### 4. Robust Simulation API
-The sandbox is not a superficial timing loop. `mockApi.js` actively executes formal data structure parsing:
-- **Depth-First Search (DFS)** verifies that workflows represent a pure Directed Acyclic Graph (DAG) and actively rejects Circular Referencing (Cycles).
-- **Breadth-First Search (BFS)** performs the logic sequence tracing and highlights "execution" logs dynamically. It strictly rejects Orphaned/Disconnected processes.
-
-### 5. Multi-Project Persistent Engine
-State preservation is critical for browser-based CAD/Diagrammatic tools. The workspace observes a unified debounce serialization structure pointing dynamically into `localStorage`. You can pivot freely between workflows without invoking data collisions. Every change seamlessly serializes to JSON.
-
-## 🔮 What I Would Add with More Time
-- **JSON Import/Export**: A literal button to upload/download a stringified JSON schema of a specific workspace, extending the proprietary localized LocalStorage.
-- **Node Collision Padding**: Integrating physics packages (like dagre) to force overlapping nodes to repel each other smoothly and maintain perfect spatial spacing automatically.
-- **Global Data Context Passing**: Enhancing the internal metadata variables to allow string interpolation between nodes (e.g., passing `{employee.Name}` natively from Node 1 deeply into the `<Automated_Node>` input values). 
-- **Undo / Redo Buffer**: Introducing immutable snapshot logging linked to `Ctrl+Z` combinations.
-
-## Evaluation Criteria Addressed
-- **React Flow Mastery:** Omni handles, custom edges with labels, dynamically highlighted nodes on sandbox playback.
-- **Scalable Codebase:** `useWorkflow` orchestrates logic cleanly out of presentation. The `/nodes` directory maps cleanly extending custom types simply via `NODE_TYPES`.
-- **Intelligent Forms:** Polymorphic conditional rendering based cleanly upon the `actionId` drop down, dynamically deploying parameters dynamically queried from external pseudo-endpoints.
+### What I Would Add with More Time
+- **Schema Import/Export Utility**: Adding explicit `JSON` parsing modules natively hooking to the local storage interface to allow human users to directly download, pass offline, and directly upload raw `.json` configurations between localized environments easily.
+- **Spatial Auto-Layout Optimization**: Implementing directed graph positioning libraries (like `dagre`) mapping to a "Beautify Flow" function to intelligently untangle heavily nested or overly complex structural graph connections programmatically into aligned visual trees.
+- **Interconnected Data Contexts**: Defining a secondary schema dictionary bridging early workflow steps deeper into the downstream nodes natively. For instance, parsing raw interpolation strings inside Automated Step Node `To:` emails (e.g. mapping `{employee_email}` generated inside Node 1 dynamically directly resolving cleanly upon node execution sequence later).
+- **Undo / Redo Safety Buffers**: Appending a stack buffer mapping into `useWorkflow.js` capable of listening internally and rolling back exact component mutations across arbitrary state jumps safely.
