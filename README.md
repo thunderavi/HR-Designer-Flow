@@ -24,7 +24,7 @@
    npm run dev
    ```
 4. **Open** `http://localhost:5173` to jump directly into the workspace!
-5. Deployed in vercel link - `https://hrdesignflow.vercel.app/`
+5. Deployed in Vercel: [Live Demo](https://hrdesignflow.vercel.app/)
 ---
 
 ## 🧩 Architectural Cards
