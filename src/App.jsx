@@ -43,7 +43,7 @@ const Resizer = ({ onDrag, direction = 'horizontal' }) => {
 };
 
 function App() {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('dark');
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
