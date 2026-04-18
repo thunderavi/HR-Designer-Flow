@@ -1,0 +1,24 @@
+.canvas-wrapper {
+  flex-grow: 1;
+  height: 100%;
+  position: relative;
+  background: var(--bg-canvas);
+}
+
+.react-flow__controls {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.react-flow__controls-button {
+  border-bottom: 1px solid var(--border-color);
+  background: transparent;
+  fill: var(--text-primary);
+}
+
+.react-flow__controls-button:hover {
+  background: var(--border-color);
+}
