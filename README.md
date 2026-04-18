@@ -29,6 +29,7 @@ The application is structured into discrete, highly-modular layers that strictly
 - **Unified Custom Hook over Global Providers:** I decided to maintain the node registry strictly inside a single `useWorkflow` custom hook instead of bloating the ecosystem with Redux. This enforces a 100% reliable single-source-of-truth accessible from any separated UI component safely, directly mapping to standard React lifecycle parameters.
 - **Omni-Directional Edge Routing:** To prevent inadvertently building a locked, rigid left-to-right visual pipeline, every Node Component type actively registers four explicit Source and Target connection endpoints. This mechanically enables fluid node branching matching native whiteboard logic without collision mapping issues.
 - **Native Dynamic Workspace Resizing:** Instead of importing heavyweight grid-system library dependencies for the app layout structure, the main application panels rely on a completely custom, hyper-optimized React `Resizer` Hook built exclusively tracking raw viewport coordinate deltas for buttery-smooth unconstrained flex adjustments without component lag.
+- **Responsive Theming Engine:** Integrated a fluid Dark/Light mode toggle directly at the root DOM level (`data-theme="dark"`). The React Flow context map and bespoke properties UI are explicitly slaved to these custom CSS Root variables across the entire shadow DOM, negating the need for massive third-party styling frameworks.
 - **Structural API Simulation Constraints:** The mock algorithm does not pretend execution; it structurally evaluates the React Flow nodes logic directly. Utilizing basic algorithmic principles (Depth-First Search DFS), it strictly evaluates and protects the integrity of the Directed Acyclic Graph (DAG) state, gracefully halting when dangerous structural Circular Execution logic (Cycles) or missing path orphans are detected.
 
 ## What I Completed vs. What I Would Add with More Time
@@ -37,6 +38,7 @@ The application is structured into discrete, highly-modular layers that strictly
 - Architected the complete foundational React Flow Canvas, inclusive of specific Node validations, dynamic configurable attribute tracking, and seamless layout transitions.
 - Integrated a comprehensive `PropertiesPanel` utilizing polymorphic generic property mapping responding identically dynamically based upon API data responses (the Automations schema generator).
 - Delivered a step-by-step visual Sandbox execution engine accurately flagging data structures and emitting runtime logs accurately.
+- Fully implemented native Workstation GUI keyboard shortcuts (`Ctrl+C` for Copy, `Ctrl+V` for Paste clone arrays, alongside universal `Backspace/Delete` key capture functionality securely bypassing interference from active form inputs).
 - Additionally enhanced application fidelity by delivering Local Storage Workspace persistency scaling arrays out dynamically for multiple workflows simultaneously alongside a highly integrated zero-dependency DOM-to-PDF export utility context snap capture package structure.
 
 ### What I Would Add with More Time

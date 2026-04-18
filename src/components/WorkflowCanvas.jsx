@@ -110,6 +110,47 @@ const WorkflowCanvas = ({ theme, nodes, setNodes, edges, setEdges, onNodeClick, 
     [reactFlowInstance, setNodes, onNodeAdded]
   );
 
+  // Copy & Paste functionality
+  const [clipboard, setClipboard] = useState(null);
+
+  React.useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Ignore if user is typing in form inputs or textareas
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
+        const selectedNodes = nodes.filter(n => n.selected);
+        if (selectedNodes.length > 0) {
+          setClipboard(selectedNodes);
+        }
+      }
+
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
+        if (clipboard && clipboard.length > 0) {
+          const newNodes = clipboard.map((node, index) => ({
+            ...node,
+            id: `${node.type}-${Date.now()}-${index}`,
+            position: { x: node.position.x + 40, y: node.position.y + 40 },
+            selected: true // Auto-select the newly pasted nodes
+          }));
+
+          setNodes(nds => {
+            // Deselect old nodes to focus on new ones
+            const currentUnselected = nds.map(n => ({...n, selected: false}));
+            return [...currentUnselected, ...newNodes];
+          });
+          
+          if (onNodeAdded && newNodes.length > 0) {
+             onNodeAdded(newNodes[0]);
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [nodes, clipboard, setNodes, onNodeAdded]);
+
   return (
     <div className="canvas-wrapper" ref={reactFlowWrapper}>
       <ReactFlow
@@ -126,6 +167,7 @@ const WorkflowCanvas = ({ theme, nodes, setNodes, edges, setEdges, onNodeClick, 
         onNodeClick={onNodeClick}
         onEdgeDoubleClick={onEdgeDoubleClick}
         connectionLineType={ConnectionLineType.SmoothStep}
+        deleteKeyCode={['Backspace', 'Delete']}
         fitView
       >
         <Background color="#cbd5e1" gap={20} />
